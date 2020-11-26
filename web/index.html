@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+          $("#but").on('click',function(){
+               var num = $("#for").serialize();
+              $.ajax({
+                  url : 'addUser',
+                  method : 'get',
+                  data: num,
+                  success : function(a){
+                     if(a>0){
+                         alert("注册成功！");
+                     }else{
+                         alert("注册失败！");
+                     }
+                  }
+              });
+              $("#tab tr:not(:first)").remove();
+              f();
+          });
+            f();
+        });
+        function f() {
+            $.ajax({
+                url : 'list',
+                type:'get',
+                success : function(list){
+                    $.each(list,function(index,i) {
+                        $("#tab").append(
+                            "<tr>" +
+                            "<td>" + i.uId + "</td>" +
+                            "<td>" + i.password + "</td>" +
+                            "</tr>"
+                        );
+                    });
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <form id="for">
+        <input type="text" name="uid" />
+        <input type="text" name="password" />
+        <input type="button" value="注册" id="but" />
+    </form>
+    <table id="tab">
+        <tr>
+            <th>用户名</th>
+            <th>密码</th>
+        </tr>
+    </table>
+</body>
+</html>
